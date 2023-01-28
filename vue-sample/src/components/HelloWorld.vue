@@ -4,6 +4,7 @@ import { ref } from 'vue'
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+const helloWorld = 'hello world'
 const plusCount = () => {
   count.value++
 }
@@ -11,6 +12,7 @@ const plusCount = () => {
 </script>
 
 <template>
+  <div class="title">{{ helloWorld }}</div>
   <h1>{{ msg }}</h1>
 
   <div class="card">
@@ -37,5 +39,10 @@ const plusCount = () => {
 <style scoped>
 .read-the-docs {
   color: #888;
+}
+
+.title {
+  color: #42b983;
+  font-size: 18px;
 }
 </style>
