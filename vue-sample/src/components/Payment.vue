@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const itemName1 = 'Desk'
+let itemName1 = 'Desk'
 const itemName2 = 'Bike'
 
 const price1 = 40000
@@ -13,6 +13,7 @@ const buy = (itemName: string) => {
 
 const input = (event: any) => {
   console.log('event.target.value:', event.target.value)
+  itemName1 = event.target.value
 }
 </script>
 
