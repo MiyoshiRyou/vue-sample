@@ -10,11 +10,16 @@ const url1 = 'https://www.amazon.com/'
 const buy = (itemName: string) => {
   alert('Are you sure to buy ' + itemName + '?')
 }
+
+const input = (event: any) => {
+  console.log('event.target.value:', event.target.value)
+}
 </script>
 
 <template>
   <div class="container">
     <h1>Payment</h1>
+    <input v-on:input="input" />
     <div class="payment">
       <label>{{ itemName1 }}</label>
       <label>{{ price1 }} yen</label>
