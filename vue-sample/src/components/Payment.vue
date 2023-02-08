@@ -1,8 +1,15 @@
 <script setup lang="ts">
-let itemName1 = 'Desk'
+import { ref, reactive } from 'vue'
+
+//const itemName1 = ref<string>('Desk')
 const itemName2 = 'Bike'
 
-const price1 = 40000
+const item1 = reactive({
+  name: 'Desk',
+  price: 40000
+})
+
+//const price1 = 40000
 const price2 = 20000
 
 const url1 = 'https://www.amazon.com/'
@@ -13,19 +20,26 @@ const buy = (itemName: string) => {
 
 const input = (event: any) => {
   console.log('event.target.value:', event.target.value)
-  itemName1 = event.target.value
+  item1.name = event.target.value
 }
+
+const inputPrice = (event: any) => {
+  console.log('event.target.value:', event.target.value)
+  item1.price = event.target.value
+}
+
 </script>
 
 <template>
   <div class="container">
     <h1>Payment</h1>
     <input v-on:input="input" />
+    <input v-on:input="inputPrice" />
     <div class="payment">
-      <label>{{ itemName1 }}</label>
-      <label>{{ price1 }} yen</label>
+      <label>{{ item1.name }}</label>
+      <label>{{ item1.price }} yen</label>
       <a v-bind:href="url1">bought at...</a>
-      <button v-on:click="buy(itemName1)">BUY</button>
+      <button v-on:click="buy(item1.name)">BUY</button>
     </div>
     <div class="payment">
       <label>{{ itemName2 }}</label>
@@ -40,6 +54,10 @@ const input = (event: any) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+input {
+  margin-bottom: 8px;
 }
 
 .payment {
