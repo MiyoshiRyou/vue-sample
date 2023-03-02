@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 //const itemName1 = ref<string>('Desk')
 const itemName2 = 'Bike'
@@ -28,16 +28,48 @@ const inputPrice = (event: any) => {
   item1.price = event.target.value
 }
 
+const clear = () => {
+  item1.name = ''
+  item1.price = 0
+}
+
+const budget = 50000
+
+const priceLabel = computed(() => {
+  return item1.price > budget ? 'too expensive' : item1.price + ' yen'
+  // if (item1.price > budget) {
+  //   return 'too expensive'
+  // } else {
+  //   return item1.price + ' yen'
+  // }
+})
+
+const getPriceLabel = () => {
+  if (item1.price > budget * 2) {
+    return 'too expensive'
+  } else if (item1.price > budget) {
+    return 'expensive'
+  } else {
+    return item1.price + ' yen'
+  }
+}
+
 </script>
 
 <template>
   <div class="container">
     <h1>Payment</h1>
-    <input v-on:input="input" />
-    <input v-on:input="inputPrice" />
+    <input v-model="item1.name" />
+    <!-- <input v-on:input="input" v-bind:value="item1.name" /> -->
+    <input v-model="item1.price" />
+    <!-- <input v-on:input="inputPrice" v-bind:value="item1.price" /> -->
+    <button v-on:click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>
-      <label>{{ item1.price }} yen</label>
+      <!-- <label>{{ priceLabel }}</label> -->
+      <label>{{ getPriceLabel() }}</label>
+      <!-- <label>{{ item1.price > budget ? 'too expensive...' : item1.price + 'yen' }}</label> -->
+      <!-- <label>{{ item1.price }} yen</label> -->
       <a v-bind:href="url1">bought at...</a>
       <button v-on:click="buy(item1.name)">BUY</button>
     </div>
