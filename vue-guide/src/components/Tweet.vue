@@ -1,19 +1,38 @@
 <script setup lang="ts">
-const tweets = [{ id: '0', description: 'Hello, world!' }, { id: '1', description: 'this is the second tweet' }]
+import { ref } from 'vue'
+import TweetPostForm from './TweetPostForm.vue'
+import TweetList from './TweetList.vue'
+const tweets = ref([{ id: 0, description: 'Hello, world!' }, { id: 1, description: 'this is the second tweet' }])
+// const inputtingDescription = ref<string>('')
+
+const postTweet = (description: string) => {
+  const tweet = { id: Math.random(), description }
+  tweets.value.push(tweet)
+  // inputtingDescription.value = ''
+  // console.log('inputting...', inputtingDescription.value)
+  // console.log('post...', tweets.value)
+}
+
+const deleteTweet = (id: number) => {
+  tweets.value = tweets.value.filter(t => t.id !== id)
+}
+
 </script>
 
 <template>
   <div class="container">
     <h1>Tweeter</h1>
-    <div class="form-container">
-      <input />
-      <button class="save-button">post</button>
-    </div>
+    <TweetPostForm @post-tweet="postTweet" />
+    <!-- <input v-model="inputtingDescription" />
+                          <button class="save-button" @click="postTweet()">post</button> -->
     <div class="tweet-container">
-      <ul>
-        <li v-for="tweet in tweets" :key="tweet.id" class="tweet-list">
-          <span>{{ tweet.description }}</span>
-        </li>
+      <p v-if="tweets.length <= 0">No tweets have been added</p>
+      <ul v-else>
+        <TweetList :tweets="tweets" @delete-tweet="deleteTweet" />
+        <!-- <li v-for="tweet in tweets" :key="tweet.id" class="tweet-list">
+                            <span>{{ tweet.description }}</span>
+                            <button @click="deleteTweet(tweet.id)" class="delete-button">delete</button>
+                          </li> -->
       </ul>
     </div>
   </div>
@@ -26,28 +45,12 @@ const tweets = [{ id: '0', description: 'Hello, world!' }, { id: '1', descriptio
   align-items: center;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: aliceblue;
-  padding: 24px 0;
-  width: 60%;
-  margin-bottom: 12px;
-  border-radius: 4px;
+input {
+  margin-bottom: 16px;
 }
 
-.tweet-list {
-  list-style: none;
-}
-
-button {
-  color: #fff;
+label {
+  font-size: 20px;
   font-weight: bold;
-  background-color: #68c9c9;
-  border-radius: 2px;
-  border: none;
-  width: 60px;
-  height: 22px;
 }
 </style>
