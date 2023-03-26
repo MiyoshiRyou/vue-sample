@@ -16,4 +16,9 @@ import PersonList from './PersonList.vue';
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>
