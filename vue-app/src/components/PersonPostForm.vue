@@ -1,4 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const inputtingName = ref<string>('')
+const inputtingAge = ref<number>(0)
+
+const emit = defineEmits(['register'])
+
+const register = () => {
+  const person = { id: Math.random(), name: inputtingName.value, age: inputtingAge.value }
+  emit('register', person)
+}
+
 </script>
 
 <template>
@@ -6,14 +18,14 @@
     <div class="input-container">
       <div class="input-column">
         <span>name:</span>
-        <input class="input" />
+        <input class="input" v-model="inputtingName" />
       </div>
       <div class="input-column">
         <span>age:</span>
-        <input class="input" />
+        <input class="input" v-model="inputtingAge" type="number" />
       </div>
     </div>
-    <button class="register-button">register</button>
+    <button @click="register" class="register-button">register</button>
   </div>
 </template>
 
